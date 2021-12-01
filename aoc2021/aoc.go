@@ -38,6 +38,40 @@ func sum(data []int) int {
 	return sum
 }
 
+func countIncreases(input []int) int {
+	var count = 0
+	var last int = input[0]
+
+	for _, n := range input {
+		if n > last {
+			count++
+		}
+
+		last = n
+	}
+
+	return count
+}
+
+func collateWindowIncreases(input []int, windowRange int) (output []int) {
+	var sums []int
+	var lastInRange = make([]int, windowRange)
+
+	for idx, n := range input {
+		if idx >= windowRange-1 {
+			lastInRange[windowRange-1] = n
+
+			sums = append(sums, sum(lastInRange[:]))
+
+			copy(lastInRange[:], lastInRange[1:])
+		} else {
+			lastInRange[idx%(windowRange-1)] = n
+		}
+	}
+
+	return sums
+}
+
 func main() {
 	input, err := readInput("input/1/input")
 
@@ -46,31 +80,6 @@ func main() {
 		return
 	}
 
-	var sums []int
-	var lastThree [3]int
-
-	for idx, n := range input {
-		if idx >= 2 {
-			lastThree[2] = n
-
-			sums = append(sums, sum(lastThree[:]))
-
-			copy(lastThree[:], lastThree[1:])
-		} else {
-			lastThree[idx%2] = n
-		}
-	}
-
-	var count = 0
-	var last int = sums[0]
-
-	for _, n := range sums {
-		if n > last {
-			count++
-		}
-
-		last = n
-	}
-
-	fmt.Printf("Count: %d\n", count)
+	fmt.Printf("Part 1 Count: %d\n", countIncreases(input))
+	fmt.Printf("Part 2 Count: %d\n", countIncreases(collateWindowIncreases(input, 3)))
 }
