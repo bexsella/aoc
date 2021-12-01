@@ -1,3 +1,3 @@
-module github.com/bexsella/aoc/2021
+module github.com/bexsella/aoc/aoc2021
 
 go 1.16
