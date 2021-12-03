@@ -29,8 +29,7 @@ func ReadInput(path string) (input []int, bitSize int, err error) {
 func BitCounter(input []int, bitSize int) (output [][]int) {
 	// Clean this mess up:
 	output = make([][]int, 2)
-	output[0] = make([]int, bitSize)
-	output[1] = make([]int, bitSize)
+	output[0], output[1] = make([]int, bitSize), make([]int, bitSize)
 
 	// Count occurances of 1 or 0
 	for _, n := range input {
@@ -42,56 +41,41 @@ func BitCounter(input []int, bitSize int) (output [][]int) {
 	return
 }
 
-func GetByMax(input []int, bit int, bitSize int) (output []int) {
+func FilterByBit(input []int, bit int, bitSize int, filter func(a, b int) int) (filteredResult int, output []int) {
 	counter := BitCounter(input, bitSize)
-	var max int
-
-	if counter[1][bit] >= counter[0][bit] {
-		max = 1
-	} else {
-		max = 0
-	}
+	var filteredBit int = filter(counter[0][bit], counter[1][bit])
 
 	for _, n := range input {
-		if n>>bit&1 == max {
+		if n>>bit&1 == filteredBit {
 			output = append(output, n)
 		}
 	}
 
 	if len(output) > 1 {
-		return GetByMax(output, bit-1, bitSize)
+		return FilterByBit(output, bit-1, bitSize, filter)
 	}
 
-	return
-}
-
-func GetByMin(input []int, bit int, bitSize int) (output []int) {
-	counter := BitCounter(input, bitSize)
-	var min int
-
-	if counter[0][bit] <= counter[1][bit] {
-		min = 0
-	} else {
-		min = 1
-	}
-
-	for _, n := range input {
-		if n>>bit&1 == min {
-			output = append(output, n)
-		}
-	}
-
-	if len(output) > 1 {
-		return GetByMin(output, bit-1, bitSize)
-	}
-
-	return
+	return output[0], nil
 }
 
 func CalcLifeSupportRating(input []int, bitSize int) int {
-	oxy := GetByMax(input, bitSize-1, bitSize)
-	co2 := GetByMin(input, bitSize-1, bitSize)
-	return oxy[0] * co2[0]
+	oxy, _ := FilterByBit(input, bitSize-1, bitSize, func(b0, b1 int) int {
+		if b1 >= b0 {
+			return 1
+		}
+
+		return 0
+	})
+
+	co2, _ := FilterByBit(input, bitSize-1, bitSize, func(b0, b1 int) int {
+		if b0 <= b1 {
+			return 0
+		}
+
+		return 1
+	})
+
+	return oxy * co2
 }
 
 func CalcPowerConsumption(input []int, bitSize int) int {
