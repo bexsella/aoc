@@ -86,5 +86,5 @@ func Execute() {
 	}
 
 	fmt.Printf("Dive Position: %d\n", ProcessMovements(input, false))
-	fmt.Printf("Final Position %d\n", ProcessMovements(input, true))
+	fmt.Printf("Final Position %d\n\n", ProcessMovements(input, true))
 }
