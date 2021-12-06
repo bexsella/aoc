@@ -7,6 +7,7 @@ import (
 	"github.com/bexsella/aoc/aoc2021/day2"
 	"github.com/bexsella/aoc/aoc2021/day3"
 	"github.com/bexsella/aoc/aoc2021/day4"
+	"github.com/bexsella/aoc/aoc2021/day6"
 )
 
 func main() {
@@ -21,4 +22,7 @@ func main() {
 
 	fmt.Println("== Start Day 4 ==")
 	day4.Execute()
+
+	fmt.Println("== Start Day 6 ==")
+	day6.Execute()
 }
