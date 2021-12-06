@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func ReadInput(path string) (input []int, err error) {
+func readInput(path string) (input []int, err error) {
 	file, err := os.Open(path)
 
 	if err != nil {
@@ -28,7 +28,7 @@ func ReadInput(path string) (input []int, err error) {
 	return input, nil
 }
 
-func Sum(data []int) (sum int) {
+func sum(data []int) (sum int) {
 	for _, n := range data {
 		sum += n
 	}
@@ -36,7 +36,7 @@ func Sum(data []int) (sum int) {
 	return sum
 }
 
-func CountIncreases(input []int) (count int) {
+func countIncreases(input []int) (count int) {
 	var last int = input[0]
 
 	for _, n := range input {
@@ -50,14 +50,14 @@ func CountIncreases(input []int) (count int) {
 	return count
 }
 
-func SumRange(input []int, windowRange int) (output []int) {
+func sumRange(input []int, windowRange int) (output []int) {
 	var lastInRange = make([]int, windowRange)
 
 	for idx, n := range input {
 		if idx >= windowRange-1 {
 			lastInRange[windowRange-1] = n
 
-			output = append(output, Sum(lastInRange[:]))
+			output = append(output, sum(lastInRange[:]))
 
 			copy(lastInRange[:], lastInRange[1:])
 		} else {
@@ -69,13 +69,13 @@ func SumRange(input []int, windowRange int) (output []int) {
 }
 
 func Execute() {
-	input, err := ReadInput("input/1/input")
+	input, err := readInput("input/1/input")
 
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	fmt.Printf("Part 1: %d\n", CountIncreases(input))
-	fmt.Printf("Part 2: %d\n\n", CountIncreases(SumRange(input, 3)))
+	fmt.Printf("Part 1: %d\n", countIncreases(input))
+	fmt.Printf("Part 2: %d\n\n", countIncreases(sumRange(input, 3)))
 }

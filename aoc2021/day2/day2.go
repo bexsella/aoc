@@ -7,30 +7,12 @@ import (
 	"os"
 )
 
-type Movement struct {
-	mtype int
+type Move struct {
+	move  string
 	value int
 }
 
-type MoveInput struct {
-	move string
-	unit int
-}
-
-const (
-	HORIZ_TYPE = iota
-	DEPTH_TYPE = iota
-)
-
-var (
-	Movements = map[string]Movement{
-		"forward": {HORIZ_TYPE, 1},
-		"down":    {DEPTH_TYPE, 1},
-		"up":      {DEPTH_TYPE, -1},
-	}
-)
-
-func ReadInput(path string) (input []MoveInput, err error) {
+func readInput(path string) (input []Move, err error) {
 	file, err := os.Open(path)
 
 	if err != nil {
@@ -44,32 +26,29 @@ func ReadInput(path string) (input []MoveInput, err error) {
 		var value int
 
 		fmt.Sscanf(scanner.Text(), "%s %d", &text, &value)
-		input = append(input, MoveInput{text, value})
+		input = append(input, Move{text, value})
 	}
 
 	return input, nil
 }
 
-func ProcessMovements(moves []MoveInput, useAim bool) int {
+func processMovements(moves []Move, useAim bool) int {
 	var horiz, depth, aim int
+	var depthAimValues = map[string]int{"up": -1, "down": 1}
 
 	for _, m := range moves {
-		switch Movements[m.move].mtype {
-		case HORIZ_TYPE:
-			horiz += m.unit
+		switch m.move {
+		case "forward":
+			horiz += m.value
 
 			if useAim {
-				depth += aim * m.unit
+				depth += aim * m.value
 			}
-		case DEPTH_TYPE:
+		case "up", "down":
 			if useAim {
-				if Movements[m.move].value > 0 {
-					aim += m.unit
-				} else {
-					aim -= m.unit
-				}
+				aim += m.value * depthAimValues[m.move]
 			} else {
-				depth += m.unit * Movements[m.move].value
+				depth += m.value * depthAimValues[m.move]
 			}
 		}
 	}
@@ -78,13 +57,13 @@ func ProcessMovements(moves []MoveInput, useAim bool) int {
 }
 
 func Execute() {
-	input, err := ReadInput("input/2/input")
+	input, err := readInput("input/2/input")
 
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	fmt.Printf("Dive Position: %d\n", ProcessMovements(input, false))
-	fmt.Printf("Final Position %d\n\n", ProcessMovements(input, true))
+	fmt.Printf("Dive Position: %d\n", processMovements(input, false))
+	fmt.Printf("Final Position %d\n\n", processMovements(input, true))
 }
