@@ -74,5 +74,5 @@ func Execute() {
 	}
 
 	fmt.Printf("Sum of 80 day lifecycle: %d\n", simulateLifecycle(input, 80))
-	fmt.Printf("Sum of 256 day lifecycle: %d\n", simulateLifecycle(input, 256))
+	fmt.Printf("Sum of 256 day lifecycle: %d\n\n", simulateLifecycle(input, 256))
 }
