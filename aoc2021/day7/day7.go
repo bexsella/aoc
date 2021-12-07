@@ -46,15 +46,9 @@ func optimalStepsWithCrabTech(input []int) int {
 	avg /= len(input)
 
 	for _, num := range input {
-		steps := 0
 		diff := int(math.Abs(float64(num - avg)))
-
-		// There's a much better way to do this, but I cannot remember what it's called.
-		for i := 0; i <= diff; i++ {
-			steps += i
-		}
-
-		sum += steps
+		step := (diff * (diff + 1)) / 2
+		sum += step
 	}
 
 	return sum
