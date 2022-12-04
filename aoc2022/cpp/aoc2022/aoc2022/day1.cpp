@@ -1,7 +1,10 @@
-export module day1;
-
-import std.core;
-import std.filesystem;
+#include <fstream>
+#include <vector>
+#include <optional>
+#include <algorithm>
+#include <numeric>
+#include <iostream>
+#include <filesystem>
 
 [[nodiscard]] auto read_input(const std::filesystem::path& path) -> std::optional<std::vector<int>> {
   std::fstream in(path);
@@ -33,11 +36,11 @@ import std.filesystem;
   return output;
 }
 
-auto sum_fat_elves(const std::vector<int>& elves, const size_t fat_elf_count = 1) -> int {
+constexpr auto sum_fat_elves(const std::vector<int>& elves, const size_t fat_elf_count = 1) -> int {
   return std::accumulate(elves.begin(), elves.begin() + fat_elf_count, 0);
 }
 
-export void Day1() {
+void Day1() {
   std::cout << "====== Day 1 Start ======\n";
 
   auto elves = read_input("input/day1");

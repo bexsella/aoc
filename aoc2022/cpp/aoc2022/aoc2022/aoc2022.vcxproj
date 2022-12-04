@@ -76,7 +76,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <EnableModules>true</EnableModules>
+      <EnableModules>false</EnableModules>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <EnableModules>true</EnableModules>
+      <EnableModules>false</EnableModules>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -108,7 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <EnableModules>true</EnableModules>
+      <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <EnableModules>true</EnableModules>
+      <EnableModules>false</EnableModules>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -135,7 +136,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="aoc2022.cpp" />
-    <ClCompile Include="day1.ixx" />
+    <ClCompile Include="day1.cpp" />
+    <ClCompile Include="day2.cpp" />
+    <ClCompile Include="day3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
